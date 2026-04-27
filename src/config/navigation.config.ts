@@ -4,6 +4,7 @@ export const mainNav: readonly NavItem[] = [
   { label: 'Início', href: '#inicio' },
   { label: 'Sobre', href: '#sobre' },
   { label: 'Meus cursos', href: '#cursos' },
+  { label: 'Seja parceiro', href: '#parceiro' },
   { label: 'Trilhas', href: '#trilhas' },
   { label: 'Dicas', href: '#dicas' },
   { label: 'Depoimentos', href: '#depoimentos' },

@@ -87,6 +87,17 @@ export function HeroSection() {
               variant="outline"
               type="button"
               onClick={() => {
+                document.getElementById('parceiro')?.scrollIntoView({ behavior: 'smooth' })
+              }}
+            >
+              Seja parceiro
+              <ArrowRight className="size-4" aria-hidden />
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              type="button"
+              onClick={() => {
                 window.location.href = getWhatsAppHref(
                   `Olá, ${siteConfig.professionalName}! Gostaria de saber mais sobre seus cursos.`,
                 )

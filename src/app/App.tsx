@@ -5,6 +5,7 @@ import { AboutSection } from '@/components/sections/about/AboutSection'
 import { CoursesSection } from '@/components/sections/courses/CoursesSection'
 import { FaqSection } from '@/components/sections/faq/FaqSection'
 import { HeroSection } from '@/components/sections/hero/HeroSection'
+import { PartnerSection } from '@/components/sections/partner/PartnerSection'
 import { TestimonialsSection } from '@/components/sections/testimonials/TestimonialsSection'
 import { TipsSection } from '@/components/sections/tips/TipsSection'
 import { TrailsSection } from '@/components/sections/trails/TrailsSection'
@@ -17,6 +18,7 @@ export default function App() {
         <HeroSection />
         <AboutSection />
         <CoursesSection />
+        <PartnerSection />
         <TrailsSection />
         <TipsSection />
         <TestimonialsSection />
