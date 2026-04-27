@@ -12,6 +12,17 @@ export type CourseItem = {
   href: string
 }
 
+export type TrailItem = {
+  id: string
+  title: string
+  subtitle: string
+  discount: string
+  courses: readonly string[]
+  priceFrom?: string
+  priceTo?: string
+  href: string
+}
+
 export type TipItem = {
   id: string
   title: string

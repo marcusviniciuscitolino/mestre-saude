@@ -7,6 +7,7 @@ import { FaqSection } from '@/components/sections/faq/FaqSection'
 import { HeroSection } from '@/components/sections/hero/HeroSection'
 import { TestimonialsSection } from '@/components/sections/testimonials/TestimonialsSection'
 import { TipsSection } from '@/components/sections/tips/TipsSection'
+import { TrailsSection } from '@/components/sections/trails/TrailsSection'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <HeroSection />
         <AboutSection />
         <CoursesSection />
+        <TrailsSection />
         <TipsSection />
         <TestimonialsSection />
         <FaqSection />

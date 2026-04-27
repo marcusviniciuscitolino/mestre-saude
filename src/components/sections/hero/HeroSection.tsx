@@ -59,10 +59,21 @@ export function HeroSection() {
           <motion.div
             variants={fadeUp}
             transition={gentleTransition}
-            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+            className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
           >
             <Button
               size="lg"
+              type="button"
+              onClick={() => {
+                document.getElementById('trilhas')?.scrollIntoView({ behavior: 'smooth' })
+              }}
+            >
+              Ver trilhas
+              <ArrowRight className="size-4" aria-hidden />
+            </Button>
+            <Button
+              size="lg"
+              variant="gold"
               type="button"
               onClick={() => {
                 document.getElementById('cursos')?.scrollIntoView({ behavior: 'smooth' })
