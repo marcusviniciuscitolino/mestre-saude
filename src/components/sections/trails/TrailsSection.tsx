@@ -1,14 +1,24 @@
 import { motion } from 'framer-motion'
-import { ArrowUpRight, BadgePercent, CheckCircle2, GraduationCap } from 'lucide-react'
+import {
+  ArrowUpRight,
+  BadgePercent,
+  CheckCircle2,
+  GraduationCap,
+  Star,
+  TrendingUp,
+} from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Card } from '@/components/ui/card'
 import { Container } from '@/components/ui/container'
 import { SectionHeading } from '@/components/ui/section-heading'
 import { trails } from '@/config/trails.config'
-import { fadeUp, gentleTransition, stagger } from '@/lib/motion'
+import { useSectionMotion } from '@/hooks/use-section-motion'
+import { cn } from '@/lib/cn'
 
 export function TrailsSection() {
+  const m = useSectionMotion()
   return (
     <section id="trilhas" className="border-b border-border/60 bg-surface py-20 lg:py-28">
       <Container>
@@ -23,13 +33,42 @@ export function TrailsSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.12 }}
-          variants={stagger}
+          variants={m.stagger}
         >
           {trails.map((trail) => (
-            <motion.article key={trail.id} variants={fadeUp} transition={gentleTransition}>
-              <Card className="flex h-full flex-col overflow-hidden p-0 transition hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-soft">
-                <div className="bg-gradient-to-br from-primary via-accent to-sky-500 p-6 text-primary-foreground">
+            <motion.article
+              key={trail.id}
+              variants={m.fadeUp}
+              transition={m.transition}
+              className={cn(trail.popular && 'lg:-mt-1 lg:scale-[1.02]')}
+            >
+              <Card
+                className={cn(
+                  'flex h-full flex-col overflow-hidden p-0 transition hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-soft',
+                  trail.popular && 'ring-2 ring-gold/50 shadow-soft',
+                )}
+              >
+                <div
+                  className={cn(
+                    'bg-gradient-to-br p-6 text-primary-foreground',
+                    trail.popular
+                      ? 'from-primary via-accent to-sky-500'
+                      : 'from-primary/90 via-primary to-accent/90',
+                  )}
+                >
                   <div className="mb-5 flex flex-wrap items-center gap-2">
+                    {trail.bestSeller ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-400/30 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-amber-100 ring-1 ring-amber-300/40">
+                        <TrendingUp className="size-3.5" aria-hidden />
+                        Mais vendido
+                      </span>
+                    ) : null}
+                    {trail.popular ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] backdrop-blur">
+                        <Star className="size-3.5" aria-hidden />
+                        Mais procurado
+                      </span>
+                    ) : null}
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] backdrop-blur">
                       <BadgePercent className="size-3.5" aria-hidden />
                       {trail.discount}
@@ -74,16 +113,31 @@ export function TrailsSection() {
                       <CheckCircle2 className="size-4 text-primary" aria-hidden />
                       Todos com certificado
                     </div>
-                    <Button
-                      className="w-full"
-                      type="button"
-                      onClick={() => {
-                        window.open(trail.href, '_blank', 'noopener,noreferrer')
-                      }}
-                    >
-                      Saiba mais
-                      <ArrowUpRight className="size-4" aria-hidden />
-                    </Button>
+                    {trail.popular ? (
+                      <a
+                        href={trail.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={cn(
+                          buttonVariants({ className: 'w-full' }),
+                        )}
+                      >
+                        Garantir esta trilha
+                        <ArrowUpRight className="size-4" aria-hidden />
+                      </a>
+                    ) : (
+                      <Button
+                        className="w-full"
+                        type="button"
+                        variant="outline"
+                        onClick={() => {
+                          window.open(trail.href, '_blank', 'noopener,noreferrer')
+                        }}
+                      >
+                        Saiba mais
+                        <ArrowUpRight className="size-4" aria-hidden />
+                      </Button>
+                    )}
                   </div>
                 </div>
               </Card>

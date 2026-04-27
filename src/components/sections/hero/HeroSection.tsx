@@ -1,16 +1,22 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, ShieldCheck } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Container } from '@/components/ui/container'
 import { getWhatsAppHref, siteConfig } from '@/config/site.config'
+import { useSectionMotion } from '@/hooks/use-section-motion'
 import { cn } from '@/lib/cn'
-import { fadeUp, gentleTransition, stagger } from '@/lib/motion'
+import { stagger } from '@/lib/motion'
 
-const heroImage =
-  'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1400&q=85'
+const heroImageBase = `${import.meta.env.BASE_URL}images/hero-clinical`
+const srcSet = [
+  `${heroImageBase}-400.jpg 400w`,
+  `${heroImageBase}-800.jpg 800w`,
+  `${heroImageBase}-1200.jpg 1200w`,
+].join(', ')
 
 export function HeroSection() {
+  const m = useSectionMotion()
+  const reduce = useReducedMotion()
   return (
     <section
       id="inicio"
@@ -29,11 +35,11 @@ export function HeroSection() {
           className="order-2 lg:order-1"
           initial="hidden"
           animate="visible"
-          variants={stagger}
+          variants={reduce ? m.fadeUp : stagger}
         >
           <motion.p
-            variants={fadeUp}
-            transition={gentleTransition}
+            variants={m.fadeUp}
+            transition={m.transition}
             className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-surface/80 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-primary backdrop-blur"
           >
             <ShieldCheck className="size-4 text-gold" aria-hidden />
@@ -41,75 +47,59 @@ export function HeroSection() {
           </motion.p>
 
           <motion.h1
-            variants={fadeUp}
-            transition={gentleTransition}
-            className="mt-6 font-display text-4xl leading-[1.05] text-foreground sm:text-5xl lg:text-[3.4rem]"
+            variants={m.fadeUp}
+            transition={m.transition}
+            className="mt-6 font-display text-4xl leading-[1.05] text-foreground sm:text-5xl lg:text-[3.2rem]"
           >
-            {siteConfig.slogan}
+            Acelere sua carreira em enfermagem com método validado por centenas de milhares de profissionais
           </motion.h1>
 
           <motion.p
-            variants={fadeUp}
-            transition={gentleTransition}
+            variants={m.fadeUp}
+            transition={m.transition}
             className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg"
           >
             {siteConfig.tagline}
           </motion.p>
 
           <motion.div
-            variants={fadeUp}
-            transition={gentleTransition}
+            variants={m.fadeUp}
+            transition={m.transition}
             className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
           >
-            <Button
-              size="lg"
-              type="button"
-              onClick={() => {
-                document.getElementById('trilhas')?.scrollIntoView({ behavior: 'smooth' })
-              }}
+            <a
+              href="#trilhas"
+              className={cn(buttonVariants({ size: 'lg' }))}
             >
               Ver trilhas
               <ArrowRight className="size-4" aria-hidden />
-            </Button>
-            <Button
-              size="lg"
-              variant="gold"
-              type="button"
-              onClick={() => {
-                document.getElementById('cursos')?.scrollIntoView({ behavior: 'smooth' })
-              }}
-            >
-              Ver cursos
-              <ArrowRight className="size-4" aria-hidden />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              type="button"
-              onClick={() => {
-                document.getElementById('parceiro')?.scrollIntoView({ behavior: 'smooth' })
-              }}
+            </a>
+            <a
+              href="#parceiro"
+              className={cn(buttonVariants({ size: 'lg', variant: 'outline' }))}
             >
               Seja parceiro
-              <ArrowRight className="size-4" aria-hidden />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
+            </a>
+            <button
               type="button"
+              className={cn(buttonVariants({ size: 'lg', variant: 'outline' }))}
               onClick={() => {
-                window.location.href = getWhatsAppHref(
-                  `Olá, ${siteConfig.professionalName}! Gostaria de saber mais sobre seus cursos.`,
+                window.open(
+                  getWhatsAppHref(
+                    `Olá, ${siteConfig.professionalName}! Gostaria de orientação sobre cursos e trilhas.`,
+                  ),
+                  '_blank',
+                  'noopener,noreferrer',
                 )
               }}
             >
-              Agendar conversa
-            </Button>
+              Falar no WhatsApp
+            </button>
           </motion.div>
 
           <motion.p
-            variants={fadeUp}
-            transition={gentleTransition}
+            variants={m.fadeUp}
+            transition={m.transition}
             className="mt-8 text-xs text-muted"
           >
             {siteConfig.professionalName} · {siteConfig.coren}
@@ -120,17 +110,20 @@ export function HeroSection() {
           className="order-1 lg:order-2"
           initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ ...gentleTransition, delay: 0.1 }}
+          transition={{ ...m.transition, delay: 0.1 }}
         >
           <div className="relative mx-auto max-w-lg lg:max-w-none">
             <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-tr from-primary/20 via-transparent to-gold/25 blur-2xl" />
             <div className="relative overflow-hidden rounded-[2rem] border border-border/80 bg-surface shadow-soft">
               <img
-                src={heroImage}
+                src={`${heroImageBase}-800.jpg`}
+                srcSet={srcSet}
+                sizes="(min-width: 1024px) 45vw, 100vw"
                 alt="Profissional de saúde em ambiente clínico moderno e luminoso"
                 className="aspect-[4/5] w-full object-cover sm:aspect-[5/6]"
                 width={900}
                 height={1100}
+                fetchPriority="high"
                 loading="eager"
                 decoding="async"
               />

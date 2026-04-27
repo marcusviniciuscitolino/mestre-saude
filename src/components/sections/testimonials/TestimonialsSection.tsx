@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { Container } from '@/components/ui/container'
 import { SectionHeading } from '@/components/ui/section-heading'
@@ -8,17 +8,21 @@ import { testimonials } from '@/config/testimonials.config'
 import { gentleTransition } from '@/lib/motion'
 import { cn } from '@/lib/cn'
 
+const INTERVAL_MS = 7000
+
 export function TestimonialsSection() {
   const [index, setIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
 
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setIndex((i) => (i + 1) % testimonials.length)
-    }, 7000)
-    return () => window.clearInterval(id)
+  const tick = useCallback(() => {
+    setIndex((i) => (i + 1) % testimonials.length)
   }, [])
 
-  const current = testimonials[index]!
+  useEffect(() => {
+    if (paused) return
+    const id = window.setInterval(tick, INTERVAL_MS)
+    return () => window.clearInterval(id)
+  }, [paused, tick])
 
   return (
     <section
@@ -32,36 +36,40 @@ export function TestimonialsSection() {
           description="Resultados reais de profissionais que aplicaram o método no dia a dia."
         />
 
-        <div className="relative mx-auto mt-14 max-w-4xl">
-          <div className="overflow-hidden rounded-[2rem] border border-border/80 bg-surface p-8 shadow-soft sm:p-12">
-            <Quote
-              className="mx-auto size-10 text-gold/80 sm:size-12"
-              aria-hidden
-            />
+        <div className="mt-14 hidden grid-cols-1 gap-6 md:grid md:grid-cols-3">
+          {testimonials.map((t) => (
+            <article
+              key={t.id}
+              className="flex h-full flex-col rounded-3xl border border-border/80 bg-surface p-6 shadow-sm sm:p-8"
+            >
+              <Quote className="size-8 text-gold/80" aria-hidden />
+              <p className="mt-4 flex-1 font-display text-lg leading-relaxed text-foreground sm:text-xl">
+                “{t.quote}”
+              </p>
+              <footer className="mt-6 border-t border-border/60 pt-4 text-sm text-muted">
+                <span className="font-medium text-foreground">{t.name}</span>
+                <span className="mx-2 text-border">·</span>
+                <span>{t.role}</span>
+              </footer>
+            </article>
+          ))}
+        </div>
 
-            <div className="relative mt-8 min-h-[9rem] sm:min-h-[8rem]">
+        <div
+          className="relative mt-14 md:hidden"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocusCapture={() => setPaused(true)}
+          onBlurCapture={() => setPaused(false)}
+        >
+          <div className="overflow-hidden rounded-[2rem] border border-border/80 bg-surface p-6 shadow-soft sm:p-8">
+            <Quote className="mx-auto size-10 text-gold/80 sm:size-12" aria-hidden />
+            <div className="relative mt-6 min-h-[9rem] sm:min-h-[8rem]">
               <AnimatePresence mode="wait" initial={false}>
-                <motion.blockquote
-                  key={current.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={gentleTransition}
-                  className="text-center"
-                >
-                  <p className="font-display text-xl leading-relaxed text-foreground sm:text-2xl">
-                    “{current.quote}”
-                  </p>
-                  <footer className="mt-8 text-sm text-muted">
-                    <span className="font-medium text-foreground">{current.name}</span>
-                    <span className="mx-2 text-border">·</span>
-                    <span>{current.role}</span>
-                  </footer>
-                </motion.blockquote>
+                <TestimonialSlide item={testimonials[index]!} key={testimonials[index]!.id} />
               </AnimatePresence>
             </div>
-
-            <div className="mt-10 flex items-center justify-center gap-4">
+            <div className="mt-8 flex items-center justify-center gap-4">
               <button
                 type="button"
                 className={cn(
@@ -69,13 +77,10 @@ export function TestimonialsSection() {
                   'hover:border-primary/40 hover:text-primary',
                 )}
                 aria-label="Depoimento anterior"
-                onClick={() =>
-                  setIndex((i) => (i - 1 + testimonials.length) % testimonials.length)
-                }
+                onClick={() => setIndex((i) => (i - 1 + testimonials.length) % testimonials.length)}
               >
                 <ChevronLeft className="size-5" />
               </button>
-
               <div className="flex gap-2">
                 {testimonials.map((t, i) => (
                   <button
@@ -90,7 +95,6 @@ export function TestimonialsSection() {
                   />
                 ))}
               </div>
-
               <button
                 type="button"
                 className={cn(
@@ -107,5 +111,27 @@ export function TestimonialsSection() {
         </div>
       </Container>
     </section>
+  )
+}
+
+function TestimonialSlide({ item }: { item: (typeof testimonials)[number] }) {
+  return (
+    <motion.blockquote
+      key={item.id}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={gentleTransition}
+      className="text-center"
+    >
+      <p className="font-display text-xl leading-relaxed text-foreground sm:text-2xl">
+        “{item.quote}”
+      </p>
+      <footer className="mt-8 text-sm text-muted">
+        <span className="font-medium text-foreground">{item.name}</span>
+        <span className="mx-2 text-border">·</span>
+        <span>{item.role}</span>
+      </footer>
+    </motion.blockquote>
   )
 }

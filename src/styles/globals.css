@@ -22,8 +22,22 @@
     scroll-behavior: smooth;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  .skip-to-content {
+    @apply pointer-events-none fixed left-4 top-4 z-[100] -translate-y-[200%] rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-lg transition-transform focus:pointer-events-auto focus:translate-y-0 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-primary;
   }
 
   ::selection {

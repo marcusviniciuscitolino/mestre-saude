@@ -1,5 +1,7 @@
 import type { TrailItem } from '@/types/content'
 
+/** @todo Trocar URLs `exemplo.com` pelas páginas reais de checkout. */
+
 const enrollmentNote = 'Todos com certificado'
 
 export const trails: readonly TrailItem[] = [
@@ -18,6 +20,8 @@ export const trails: readonly TrailItem[] = [
     priceFrom: 'R$169,50',
     priceTo: 'R$144,00',
     href: 'https://exemplo.com/trilhas/mega-combo-enfermagem',
+    popular: true,
+    bestSeller: true,
   },
   {
     id: 'combo-assistencia-segura',
@@ -49,3 +53,7 @@ export const trails: readonly TrailItem[] = [
     href: 'https://exemplo.com/trilhas/combo-essencial',
   },
 ] as const
+
+export function getTrailTitleById(id: string) {
+  return trails.find((t) => t.id === id)?.title
+}

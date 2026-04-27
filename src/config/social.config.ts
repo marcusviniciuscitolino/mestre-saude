@@ -1,6 +1,6 @@
 import type { SocialLink } from '@/types/content'
 
-/** Links genéricos — substitua pelos perfis reais. */
+/** @todo Substituir `exemplo` pelas URLs oficiais dos canais. */
 export const socialLinks: readonly SocialLink[] = [
   { id: 'ig', label: 'Instagram', href: 'https://instagram.com/exemplo' },
   { id: 'yt', label: 'YouTube', href: 'https://youtube.com/@exemplo' },

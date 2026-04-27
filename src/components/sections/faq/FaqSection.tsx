@@ -7,10 +7,13 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { faqItems } from '@/config/faq.config'
+import { faqPageJsonLd } from '@/lib/seo-jsonld'
+import { JsonLd } from '@/components/seo/JsonLd'
 
 export function FaqSection() {
   return (
     <section id="faq" className="border-b border-border/60 bg-surface py-20 lg:py-28">
+      <JsonLd data={faqPageJsonLd} />
       <Container>
         <SectionHeading
           eyebrow="Dúvidas"

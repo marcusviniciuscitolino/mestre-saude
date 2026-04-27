@@ -1,73 +1,38 @@
-# React + TypeScript + Vite
+# Mestre em Saúde — Site
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Landing + blog em **React 19**, **Vite 8**, **TypeScript**, **Tailwind CSS v4** e **MDX** (posts em `src/content/blog/`).
 
-Currently, two official plugins are available:
+## Scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- `npm run start` — servidor de desenvolvimento
+- `npm run build` — build de produção (`dist/`)
+- `npm run preview` — preview do build
+- `npm run lint` — ESLint
 
-## React Compiler
+## Configuração
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Copie [`.env.example`](.env.example) para `.env` e preencha `VITE_SITE_URL` (URL pública, sem barra final) para canonical, Open Graph e JSON-LD.
+2. Ajuste [`src/config/site.config.ts`](src/config/site.config.ts) (COREN, e-mail, WhatsApp).
+3. **Lead / e-mail:** `VITE_LEAD_PROVIDER` + `VITE_LEAD_ENDPOINT` (ex.: Formspree) ou `whatsapp` para só abrir conversa com texto preenchido.
+4. **Trilhas e cursos:** URLs em [`src/config/trails.config.ts`](src/config/trails.config.ts) e [`src/config/courses.config.ts`](src/config/courses.config.ts).
 
-## Expanding the ESLint configuration
+## Blog
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Adicione arquivos `.mdx` em `src/content/blog/` com:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```mdx
+export const frontmatter = {
+  slug: 'meu-post',
+  title: 'Título',
+  excerpt: '...',
+  category: 'Clínica',
+  publishedAt: '2025-12-01',
+  cover: 'images/nome.svg',
+}
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Conteúdo em Markdown/MDX aqui.
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Deploy
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+O `base` do Vite está em `/mestre-saude/` ([`vite.config.ts`](vite.config.ts)). Ajuste se o site for servido na raiz do domínio.
