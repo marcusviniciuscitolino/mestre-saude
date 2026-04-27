@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">First aid kit</title>
+  <desc id="desc">Clean first aid kit illustration with gauze, bottle and medical gloves.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eaf7f8"/>
+      <stop offset="100%" stop-color="#f7fcfc"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <ellipse cx="820" cy="830" rx="470" ry="100" fill="#cde3e7" opacity="0.6"/>
+  <rect x="430" y="260" width="760" height="500" rx="52" fill="#ffffff"/>
+  <rect x="500" y="310" width="620" height="390" rx="36" fill="#f4fbfc"/>
+  <rect x="754" y="408" width="112" height="208" rx="20" fill="#0f7f86"/>
+  <rect x="706" y="456" width="208" height="112" rx="20" fill="#0f7f86"/>
+  <rect x="778" y="438" width="64" height="148" rx="12" fill="#f3d487"/>
+  <rect x="730" y="480" width="160" height="64" rx="12" fill="#f3d487"/>
+  <rect x="700" y="196" width="220" height="86" rx="34" fill="#ffffff"/>
+  <rect x="748" y="216" width="124" height="44" rx="22" fill="#dff1f3"/>
+  <rect x="1220" y="430" width="120" height="250" rx="24" fill="#ffffff"/>
+  <rect x="1252" y="470" width="56" height="170" rx="18" fill="#dff1f3"/>
+  <rect x="270" y="500" width="140" height="180" rx="24" fill="#ffffff"/>
+  <rect x="308" y="538" width="64" height="104" rx="16" fill="#dff1f3"/>
+  <rect x="1170" y="700" width="220" height="52" rx="18" fill="#ffffff"/>
+  <rect x="210" y="700" width="220" height="52" rx="18" fill="#ffffff"/>
+</svg>
