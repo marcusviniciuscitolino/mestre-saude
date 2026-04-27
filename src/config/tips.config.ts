@@ -1,5 +1,7 @@
 import type { TipItem } from '@/types/content'
 
+const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`
+
 export const tips: readonly TipItem[] = [
   {
     id: 'tip-1',
@@ -8,7 +10,7 @@ export const tips: readonly TipItem[] = [
       'Um fluxo claro reduz retrabalho, melhora a continuidade do cuidado e fortalece a comunicação com a equipe médica.',
     href: '#dica-1',
     category: 'Documentação',
-    imageUrl: '/images/stethoscope-tools-clean.svg',
+    imageUrl: publicAsset('images/stethoscope-tools-clean.svg'),
   },
   {
     id: 'tip-2',
@@ -17,7 +19,7 @@ export const tips: readonly TipItem[] = [
       'Pequenas mudanças antecipam descompensação. Checklist rápido para sala de emergência e enfermaria.',
     href: '#dica-2',
     category: 'Clínica',
-    imageUrl: '/images/first-aid-kit-clean.svg',
+    imageUrl: publicAsset('images/first-aid-kit-clean.svg'),
   },
   {
     id: 'tip-3',
@@ -26,6 +28,6 @@ export const tips: readonly TipItem[] = [
       'SBAR adaptado, registro objetivo e foco em riscos: menos ruído, mais segurança do paciente.',
     href: '#dica-3',
     category: 'Soft skills',
-    imageUrl: '/images/nurses-shift-clean.svg',
+    imageUrl: publicAsset('images/nurses-shift-clean.svg'),
   },
 ] as const

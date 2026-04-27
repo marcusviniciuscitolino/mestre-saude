@@ -6,7 +6,7 @@ import { SectionHeading } from '@/components/ui/section-heading'
 import { siteConfig } from '@/config/site.config'
 import { fadeUp, gentleTransition } from '@/lib/motion'
 
-const aboutImage = '/images/nursing-team-clean.svg'
+const aboutImage = `${import.meta.env.BASE_URL}images/nursing-team-clean.svg`
 
 export function AboutSection() {
   return (
