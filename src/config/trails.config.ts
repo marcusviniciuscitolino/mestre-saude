@@ -1,7 +1,5 @@
 import type { TrailItem } from '@/types/content'
 
-/** @todo Trocar URLs `exemplo.com` pelas páginas reais de checkout. */
-
 const enrollmentNote = 'Todos com certificado'
 
 export const trails: readonly TrailItem[] = [
@@ -19,7 +17,7 @@ export const trails: readonly TrailItem[] = [
     ],
     priceFrom: 'R$169,50',
     priceTo: 'R$144,00',
-    href: 'https://exemplo.com/trilhas/mega-combo-enfermagem',
+    href: 'https://cursos.aprimorandoenfermagem.com.br/mega-combo-todos-os-cursos-para-voce-se-destacar-no-mercado-de-trabalho-e-nos-processos-seletivos',
     popular: true,
     bestSeller: true,
   },
@@ -36,7 +34,7 @@ export const trails: readonly TrailItem[] = [
     ],
     priceFrom: 'R$129,60',
     priceTo: 'R$116,00',
-    href: 'https://exemplo.com/trilhas/combo-assistencia-segura',
+    href: 'https://cursos.aprimorandoenfermagem.com.br/combo-assistencia-segura-quatro-cursos-com-10-de-desconto',
   },
   {
     id: 'combo-essencial',
@@ -50,7 +48,7 @@ export const trails: readonly TrailItem[] = [
     ],
     priceFrom: 'R$68,80',
     priceTo: 'R$61,00',
-    href: 'https://exemplo.com/trilhas/combo-essencial',
+    href: 'https://cursos.aprimorandoenfermagem.com.br/combo-essencial-tres-cursos-e-book-de-anotacao-com-10-de-desconto',
   },
 ] as const
 

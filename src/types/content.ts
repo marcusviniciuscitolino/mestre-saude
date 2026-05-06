@@ -9,9 +9,15 @@ export type CourseItem = {
   href: string
   /** e.g. "R$ 97" — shown on card */
   priceFrom?: string
+  /** discounted price when shown with strikethrough `priceFrom` */
+  priceTo?: string
   badge?: CourseBadge
   /** trilha id where this course appears (for cross-link text) */
   trailId?: string
+  /** When true, card spans full width and uses the featured horizontal layout */
+  featured?: boolean
+  /** Short promotional bonus line shown below the price, e.g. "Ganhe o e-book gratuito" */
+  bonusNote?: string
 }
 
 export type TrailItem = {
