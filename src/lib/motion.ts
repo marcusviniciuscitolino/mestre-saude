@@ -15,6 +15,6 @@ export const stagger: Variants = {
 }
 
 export const gentleTransition: Transition = {
-  duration: 0.55,
+  duration: 0.38,
   ease: [0.22, 1, 0.36, 1],
 }

@@ -1,8 +1,7 @@
 import { useId, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { FloatingLabelInput } from '@/components/ui/floating-label-input'
 import { leadConfig, isLeadFormEnabled } from '@/config/lead.config'
 import { getWhatsAppHref, siteConfig } from '@/config/site.config'
 import { pushDataLayerEvent } from '@/lib/analytics'
@@ -108,34 +107,28 @@ export function LeadForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4" noValidate>
-      <p className="text-xs text-muted">
-        {leadConfig.leadMagnetDescription}
-      </p>
-      <div className="grid gap-2">
-        <Label htmlFor="lead-name">Nome (opcional)</Label>
-        <Input
-          id="lead-name"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          autoComplete="name"
-          disabled={status === 'loading' || status === 'success'}
-        />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="lead-email">E-mail</Label>
-        <Input
-          id="lead-email"
-          name="email"
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          autoComplete="email"
-          disabled={status === 'loading' || status === 'success'}
-        />
-      </div>
+    <form onSubmit={onSubmit} className="space-y-5" noValidate>
+      <p className="text-xs leading-relaxed text-muted">{leadConfig.leadMagnetDescription}</p>
+      <FloatingLabelInput
+        id="lead-name"
+        name="name"
+        label="Nome (opcional)"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        autoComplete="name"
+        disabled={status === 'loading' || status === 'success'}
+      />
+      <FloatingLabelInput
+        id="lead-email"
+        name="email"
+        type="email"
+        required
+        label="E-mail profissional"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        autoComplete="email"
+        disabled={status === 'loading' || status === 'success'}
+      />
       <div className="hidden" aria-hidden>
         <label htmlFor={honeypotId}>Company</label>
         <input id={honeypotId} name="company" type="text" tabIndex={-1} autoComplete="off" />
@@ -146,7 +139,13 @@ export function LeadForm() {
           {message || leadConfig.successMessage}
         </p>
       ) : null}
-      <Button type="submit" className="w-full sm:w-auto" disabled={status === 'loading' || status === 'success'}>
+      <Button
+        type="submit"
+        variant="gold"
+        size="lg"
+        className="w-full"
+        disabled={status === 'loading' || status === 'success'}
+      >
         {status === 'loading' ? 'Enviando…' : provider === 'whatsapp' ? 'Receber no WhatsApp' : 'Quero o material grátis'}
       </Button>
     </form>

@@ -10,12 +10,14 @@ export const buttonVariants = cva(
         outline:
           'border border-primary/30 bg-surface/80 text-primary backdrop-blur hover:border-primary hover:bg-primary/5',
         ghost: 'text-muted hover:bg-foreground/5 hover:text-foreground',
-        gold: 'border border-gold/50 bg-surface text-foreground shadow-sm hover:border-gold hover:shadow-md',
+        gold:
+          'border border-gold/45 bg-surface text-foreground shadow-sm transition-[box-shadow,border-color,transform] hover:border-gold hover:shadow-glow-gold active:scale-[0.985]',
       },
       size: {
         default: 'h-11 px-6 py-2',
         sm: 'h-9 px-4 text-xs',
         lg: 'h-12 px-8 text-base',
+        xl: 'h-14 px-10 text-[1.025rem]',
         icon: 'h-10 w-10 rounded-full p-0',
       },
     },

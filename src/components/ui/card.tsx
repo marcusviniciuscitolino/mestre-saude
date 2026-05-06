@@ -1,20 +1,26 @@
+import { cva, type VariantProps } from 'class-variance-authority'
 import { type HTMLAttributes } from 'react'
 
 import { cn } from '@/lib/cn'
 
-export function Card({
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-      className={cn(
-        'rounded-3xl border border-border/80 bg-surface p-6 shadow-card',
-        className,
-      )}
-      {...props}
-    />
-  )
+const cardVariants = cva('rounded-3xl border shadow-card transition', {
+  variants: {
+    variant: {
+      default: 'border-border/80 bg-surface p-6',
+      elevated: 'border-border/60 bg-surface p-6 shadow-soft',
+      'gold-trim': 'border-border/75 border-t-[3px] border-t-gold bg-surface p-6 pt-[calc(theme(spacing[6])+1px)]',
+      dark: 'border-foreground/20 bg-footer-ink text-primary-foreground p-6',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+})
+
+export type CardProps = HTMLAttributes<HTMLDivElement> & VariantProps<typeof cardVariants>
+
+export function Card({ className, variant, ...props }: CardProps) {
+  return <div className={cn(cardVariants({ variant }), className)} {...props} />
 }
 
 export function CardHeader({

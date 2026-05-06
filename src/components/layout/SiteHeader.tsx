@@ -40,6 +40,15 @@ export function SiteHeader() {
     return () => window.removeEventListener('resize', onResize)
   }, [open])
 
+  useEffect(() => {
+    if (!open) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [open])
+
   function isItemActive(item: MainNavItem) {
     if (item.kind === 'route') {
       if (item.to === '/blog') {
@@ -63,61 +72,75 @@ export function SiteHeader() {
       </a>
       <header
         className={cn(
-          'sticky top-0 z-50 border-b border-border/60 bg-background/75 backdrop-blur-xl',
-          scrolled && 'shadow-sm',
+          'sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl',
+          scrolled && 'shadow-sm shadow-foreground/[0.04]',
         )}
       >
-        <Container className="flex h-16 items-center justify-between lg:h-[4.25rem]">
+        <Container className="flex h-[4rem] items-center justify-between gap-4 lg:h-[4.75rem] lg:gap-6">
           <Link
             to="/"
-            className="group flex items-center gap-2.5 sm:gap-3"
+            className="group flex shrink-0 items-center gap-3 sm:gap-3.5"
             onClick={() => setOpen(false)}
           >
             <img
               src={brandMarkSrc}
               alt=""
-              className="h-8 w-8 shrink-0 object-contain sm:h-9 sm:w-9"
+              className="h-[1.85rem] w-[1.85rem] shrink-0 object-contain opacity-95 sm:h-9 sm:w-9"
               width={36}
               height={34}
               loading="eager"
               decoding="async"
             />
-            <span className="flex flex-col items-start gap-0.5">
-              <span className="font-display text-lg tracking-tight text-foreground transition group-hover:text-primary sm:text-xl">
+            <span className="flex min-w-0 flex-col items-start gap-0.5 leading-tight">
+              <span className="truncate font-display text-[1.05rem] tracking-tight text-foreground transition group-hover:text-primary sm:text-[1.125rem]">
                 {siteConfig.title}
               </span>
-              <span className="text-[0.65rem] font-medium uppercase tracking-[0.18em] text-muted">
+              <span className="max-w-[10rem] truncate text-[0.6rem] font-medium uppercase tracking-[0.2em] text-muted sm:max-w-[14rem] sm:text-[0.65rem]">
                 {siteConfig.professionalName}
               </span>
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Principal">
+          <nav className="hidden items-center gap-0.5 lg:flex xl:gap-1" aria-label="Principal">
             {mainNav.map((item) => {
               const { to } = navItemToProps(item)
+              const active = isItemActive(item)
               return (
                 <Link
                   key={item.label}
                   to={to}
                   className={cn(
-                    'rounded-full px-3 py-2 text-sm transition',
-                    isItemActive(item)
-                      ? 'bg-primary/10 font-medium text-primary'
-                      : 'text-muted hover:bg-foreground/5 hover:text-foreground',
+                    'relative rounded-full px-3.5 py-2 text-sm transition',
+                    active
+                      ? 'font-medium text-foreground'
+                      : 'text-muted hover:bg-foreground/[0.04] hover:text-foreground',
                   )}
-                  aria-current={isItemActive(item) ? 'page' : undefined}
+                  aria-current={active ? 'page' : undefined}
                 >
                   {item.label}
+                  <span
+                    className={cn(
+                      'absolute bottom-0.5 left-1/2 h-[2px] w-9 max-w-[65%] -translate-x-1/2 rounded-full bg-gold transition-opacity duration-[280ms]',
+                      active ? 'opacity-100' : 'opacity-0',
+                    )}
+                    aria-hidden
+                  />
                 </Link>
               )
             })}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="hidden shrink-0 items-center gap-3 lg:flex xl:gap-4">
+            <span
+              className="hidden max-w-[11rem] truncate whitespace-nowrap text-[0.6rem] font-semibold uppercase leading-tight tracking-[0.12em] text-muted xl:inline"
+              title="Registro profissional"
+            >
+              {siteConfig.coren}
+            </span>
             <Button
-              className="hidden lg:inline-flex"
               size="sm"
               variant="default"
+              className="shrink-0"
               onClick={() => {
                 window.open(
                   getWhatsAppHref(
@@ -131,12 +154,14 @@ export function SiteHeader() {
             >
               Falar no WhatsApp
             </Button>
+          </div>
 
+          <div className="flex items-center gap-2 lg:hidden">
             <button
               type="button"
-              className="inline-flex rounded-full p-2 text-foreground lg:hidden"
+              className="inline-flex rounded-full p-2 text-foreground"
               aria-expanded={open}
-              aria-controls="mobile-nav"
+              aria-controls="mobile-nav-panel"
               aria-label={open ? 'Fechar menu' : 'Abrir menu'}
               onClick={() => setOpen((v) => !v)}
             >
@@ -144,44 +169,69 @@ export function SiteHeader() {
             </button>
           </div>
         </Container>
+      </header>
+
+      <div
+        className={cn(
+          'fixed inset-0 z-40 lg:hidden transition-[opacity,backdrop-filter]',
+          open ? 'pointer-events-auto opacity-100 backdrop-blur-sm' : 'pointer-events-none opacity-0',
+        )}
+        aria-hidden={!open}
+      >
+        <button
+          type="button"
+          className={cn(
+            'absolute inset-0 bg-foreground/[0.40] transition-opacity',
+            open ? 'opacity-100' : 'opacity-0',
+          )}
+          tabIndex={open ? 0 : -1}
+          aria-label="Fechar menu"
+          onClick={() => setOpen(false)}
+        />
 
         <div
-          id="mobile-nav"
-          className={cn('border-b border-border/60 bg-background lg:hidden', open ? 'block' : 'hidden')}
+          id="mobile-nav-panel"
+          className={cn(
+            'absolute bottom-0 right-0 top-[4rem] flex w-[min(20rem,calc(100vw-2.5rem))] flex-col gap-6 overflow-y-auto border-l border-border/70 bg-background/98 px-6 py-8 shadow-[-12px_0_40px_rgba(11,31,29,0.12)] backdrop-blur-2xl transition-transform duration-[380ms] ease-[cubic-bezier(0.22,1,0.36,1)]',
+            open ? 'translate-x-0' : 'translate-x-full',
+          )}
         >
-          <Container className="flex flex-col gap-1 pb-5 pt-2">
+          <nav className="flex flex-col gap-0.5" aria-label="Menu móvel">
             {mainNav.map((item) => {
               const { to } = navItemToProps(item)
               return (
                 <Link
                   key={item.label}
                   to={to}
-                  className="rounded-2xl px-3 py-3 text-base text-muted hover:bg-foreground/5 hover:text-foreground"
+                  className="rounded-xl py-3.5 text-base font-medium text-muted hover:bg-primary/7 hover:text-foreground"
                   onClick={() => setOpen(false)}
                 >
                   {item.label}
                 </Link>
               )
             })}
-            <Button
-              className="mt-2 w-full"
-              variant="default"
-              type="button"
-              onClick={() => {
-                setOpen(false)
-                window.open(
-                  getWhatsAppHref(
-                    `Olá, ${siteConfig.professionalName}! Vim pelo site.`,
-                  ),
-                  '_blank',
-                )
-              }}
-            >
-              Falar no WhatsApp
-            </Button>
-          </Container>
+          </nav>
+          <p className="text-[0.65rem] font-medium uppercase tracking-[0.14em] text-muted">
+            {siteConfig.coren}
+          </p>
+          <Button
+            variant="default"
+            className="w-full"
+            type="button"
+            onClick={() => {
+              setOpen(false)
+              window.open(
+                getWhatsAppHref(
+                  `Olá, ${siteConfig.professionalName}! Vim pelo site.`,
+                ),
+                '_blank',
+              )
+            }}
+          >
+            Falar no WhatsApp
+          </Button>
         </div>
-      </header>
+      </div>
     </>
   )
 }
