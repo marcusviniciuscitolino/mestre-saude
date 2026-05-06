@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, ChevronRight, ShieldCheck } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import { GoldDivider, PulseLineBg } from '@/components/ui/decorative'
 import { buttonVariants } from '@/components/ui/button-variants'
@@ -77,16 +78,16 @@ export function HeroSection() {
             transition={m.transition}
             className="mt-10 flex flex-wrap items-center gap-4"
           >
-            <a href="#trilhas" className={cn(buttonVariants({ size: 'xl', variant: 'default' }))}>
+            <Link to={{ pathname: '/', hash: 'trilhas' }} className={cn(buttonVariants({ size: 'xl', variant: 'default' }))}>
               Ver trilhas
               <ArrowRight className="size-[1.05rem]" aria-hidden />
-            </a>
-            <a
-              href="#parceiro"
+            </Link>
+            <Link
+              to={{ pathname: '/', hash: 'parceiro' }}
               className={cn(buttonVariants({ size: 'xl', variant: 'outline' }), 'hidden sm:inline-flex')}
             >
               Seja parceiro
-            </a>
+            </Link>
             <button
               type="button"
               className="group inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline sm:ml-2"

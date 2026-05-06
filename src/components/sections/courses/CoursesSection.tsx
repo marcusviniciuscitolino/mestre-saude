@@ -101,9 +101,9 @@ function CourseCard({
     trailTitle != null ? (
       <p className={cn('text-xs text-muted', variant === 'featured' && 'mt-3')}>
         Conteúdo alinhado à trilha{' '}
-        <a href="#trilhas" className="font-semibold text-primary hover:text-accent">
+        <Link to={{ pathname: '/', hash: 'trilhas' }} className="font-semibold text-primary hover:text-accent">
           {trailTitle}
-        </a>
+        </Link>
         .
       </p>
     ) : null

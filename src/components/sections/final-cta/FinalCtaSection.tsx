@@ -48,9 +48,12 @@ export function FinalCtaSection() {
             </p>
           </div>
           <div className="flex w-full flex-col gap-4 sm:max-w-2xl sm:flex-row">
-            <a href="#trilhas" className={cn(buttonVariants({ size: 'lg', variant: 'gold' }), 'w-full sm:w-auto')}>
+            <Link
+              to={{ pathname: '/', hash: 'trilhas' }}
+              className={cn(buttonVariants({ size: 'lg', variant: 'gold' }), 'w-full sm:w-auto')}
+            >
               Ver trilhas
-            </a>
+            </Link>
             <Button
               size="lg"
               type="button"
