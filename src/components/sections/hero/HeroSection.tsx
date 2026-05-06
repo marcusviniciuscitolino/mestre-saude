@@ -1,14 +1,9 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, ChevronRight, ShieldCheck } from 'lucide-react'
-import { useEffect, useState } from 'react'
 
 import { GoldDivider, PulseLineBg } from '@/components/ui/decorative'
-import { Stat } from '@/components/ui/stat'
 import { buttonVariants } from '@/components/ui/button-variants'
 import { Container } from '@/components/ui/container'
-import { courses } from '@/config/courses.config'
-import { INITIAL_ALUNAS } from '@/config/proof-numbers'
-import { formatMetricNumber, socialPresenceMetrics } from '@/config/social-metrics.config'
 import { getWhatsAppHref, siteConfig } from '@/config/site.config'
 import { useSectionMotion } from '@/hooks/use-section-motion'
 import { cn } from '@/lib/cn'
@@ -24,17 +19,6 @@ const srcSet = [
 export function HeroSection() {
   const m = useSectionMotion()
   const reduce = useReducedMotion()
-  const [alunasCount, setAlunasCount] = useState(INITIAL_ALUNAS)
-
-  useEffect(() => {
-    if (reduce) return
-    let ticks = 0
-    const id = window.setInterval(() => {
-      ticks += 1
-      setAlunasCount((prev) => prev + (ticks % 4 === 0 ? 2 : 0))
-    }, 4000)
-    return () => window.clearInterval(id)
-  }, [reduce])
 
   return (
     <section
@@ -120,37 +104,6 @@ export function HeroSection() {
               <ChevronRight className="size-4 transition group-hover:translate-x-0.5" aria-hidden />
             </button>
           </motion.div>
-
-          <motion.div
-            variants={m.fadeUp}
-            transition={m.transition}
-            className="mt-12 grid gap-6 border-t border-border/60 pt-10 sm:grid-cols-3"
-          >
-            <Stat
-              size="sm"
-              value={
-                <>
-                  {formatMetricNumber(socialPresenceMetrics.totalFollowers)}
-                  <span className="text-gold">{socialPresenceMetrics.totalFollowersSuffix}</span>
-                </>
-              }
-              label="Seguidores nas redes"
-            />
-            <Stat
-              size="sm"
-              value={<span className="tabular-nums">{alunasCount.toLocaleString('pt-BR')}</span>}
-              label="Alunos(as) formados(as)"
-            />
-            <Stat size="sm" value={`${courses.length}+`} label="Cursos e trilhas ativos" />
-          </motion.div>
-
-          <motion.p
-            variants={m.fadeUp}
-            transition={m.transition}
-            className="mt-8 text-xs uppercase tracking-[0.16em] text-muted"
-          >
-            {siteConfig.professionalName} · {siteConfig.coren}
-          </motion.p>
         </motion.div>
 
         <motion.div
