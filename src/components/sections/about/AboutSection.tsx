@@ -12,7 +12,7 @@ import { fadeUp, gentleTransition } from '@/lib/motion'
 
 const aboutImage = `${import.meta.env.BASE_URL}images/nursing-team-clean.svg`
 
-const CREDENTIAL_LINES = [
+const CREDENTIAL_LINES: { title: string; body: string }[] = [
   {
     title: 'Graduação em Enfermagem',
     body: 'Formação técnico-científica aplicada aos protocolos contemporâneos de cuidado.',
@@ -25,7 +25,11 @@ const CREDENTIAL_LINES = [
     title: 'Experiência clínica contínua',
     body: 'Rotina em ambientes de alta complexidade, UTI, emergência e gestão da equipe.',
   },
-] as const
+  {
+    title: siteConfig.coren,
+    body: 'Atuação em cenários de alta complexidade com foco no eixo cardiopulmonar e segurança assistencial.',
+  },
+]
 
 export function AboutSection() {
   return (

@@ -5,8 +5,8 @@
 export const siteConfig = {
   title: 'Mestre em Saúde',
   professionalName: 'Enf. Clairton Marcos Citolino',
-  /** Substituir pelo COREN e regional corretos */
-  coren: 'COREN 123456 – Região de atuação genérica',
+  /** Especialidade / registro profissional exibido no site */
+  coren: 'Especialista em Cardiopneumologista de Alta Complexidade',
   slogan: 'Mestre em Saúde',
   tagline:
     'Cursos práticos, atualização clínica e orientações para sua carreira em enfermagem — com método, ética e resultados.',
